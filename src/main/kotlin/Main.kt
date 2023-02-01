@@ -40,4 +40,15 @@ class Solution {
 
         return ""
     }
+
+    //9. Palindrome Number
+    fun isPalindrome(x: Int): Boolean {
+        return when {
+            x in 0..9 -> true
+            x < 0 || (x - (x % 10)) % 10 != 0 -> false
+            else -> {
+                x.toString() == x.toString().reversed()
+            }
+        }
+    }
 }

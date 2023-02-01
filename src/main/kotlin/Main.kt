@@ -1,14 +1,25 @@
 import kotlin.math.abs
 
 fun main(args: Array<String>) {
-    println("Hello World!")
+    val solution = Solution()
 
-    // Try adding program arguments via Run/Debug configuration.
-    // Learn more about running applications: https://www.jetbrains.com/help/idea/running-applications.html.
-    println("Program arguments: ${args.joinToString()}")
+    println(solution.myAtoi("4193 with words"))
 }
 
 class Solution {
+
+    //1. Two Sum
+    fun twoSum(nums: IntArray, target: Int): IntArray {
+        val map = hashMapOf<Int, Int>()
+        for (i in nums.indices) {
+            if (map.containsKey(target - nums[i])) {
+                val tmp = map[target - nums[i]]!!.toInt()
+                return intArrayOf(tmp, i)
+            }
+            map[nums[i]] = i
+        }
+        return intArrayOf()
+    }
 
     // 4. Median of Two Sorted Arrays
     fun findMedianSortedArrays(nums1: IntArray, nums2: IntArray): Double {
@@ -54,6 +65,37 @@ class Solution {
         }
     }
 
+    //8. String to Integer (atoi)
+    fun myAtoi(s: String): Int {
+        val num = s.toIntOrNull()
+        return if (num != null) {
+            num
+        } else {
+            fun isSign(s: Char): Boolean {
+                return s == '+' || s == '-'
+            }
+
+            val trimmed= s.dropWhile { it.isWhitespace() }
+
+            val sign = trimmed.takeWhile { isSign(it) }
+            val filteredLong = trimmed
+                .dropWhile { isSign(it) }
+                .takeWhile { it.isDigit() || it == '.'}
+
+            val final = if (sign.isEmpty()) {
+                filteredLong
+            } else {
+                sign + filteredLong
+            }.toDoubleOrNull() ?: 0.0
+
+            when {
+                final > Integer.MAX_VALUE -> Integer.MAX_VALUE
+                final < Integer.MIN_VALUE -> Integer.MIN_VALUE
+                else -> final.toInt()
+            }
+        }
+    }
+
     //9. Palindrome Number
     fun isPalindrome(x: Int): Boolean {
         return when {
@@ -63,5 +105,19 @@ class Solution {
                 x.toString() == x.toString().reversed()
             }
         }
+    }
+
+    //20. Valid Parentheses
+    fun isValidParentheses(s: String): Boolean {
+        val stack = ArrayDeque<Char>()
+        for (c in s) {
+            when (c) {
+                '(', '{', '[' -> stack.add(c)
+                ')' -> if (stack.isEmpty() || stack.removeLast() != '(') return false
+                '}' -> if (stack.isEmpty() || stack.removeLast() != '{') return false
+                ']' -> if (stack.isEmpty() || stack.removeLast() != '[') return false
+            }
+        }
+        return stack.isEmpty()
     }
 }

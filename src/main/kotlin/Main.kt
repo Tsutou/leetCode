@@ -1,3 +1,5 @@
+import kotlin.math.abs
+
 fun main(args: Array<String>) {
     println("Hello World!")
 
@@ -39,6 +41,17 @@ class Solution {
         }
 
         return ""
+    }
+
+    //7. Reverse Integer
+    fun reverse(x: Int): Int {
+        val absX = abs(x).toString()
+        return when {
+            x <= Integer.MIN_VALUE -> return 0
+            absX.toLong() >= Integer.MAX_VALUE || absX.reversed().toLong() >= Integer.MAX_VALUE -> return 0
+            x < 0 -> absX.reversed().toInt().unaryMinus()
+            else -> x.toString().reversed().toInt()
+        }
     }
 
     //9. Palindrome Number

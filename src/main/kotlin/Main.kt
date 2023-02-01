@@ -120,4 +120,34 @@ class Solution {
         }
         return stack.isEmpty()
     }
+
+    //35. Search Insert Position
+    fun searchInsert(nums: IntArray, target: Int): Int {
+        var last = 0
+        nums.mapIndexed { index, i ->
+            if (i == target) {
+                return index
+            }
+            if (i < target) {
+                last = index
+            }
+            if (i > target) {
+                return if (index - last == 1) index else if (index == 0) last else last + 1
+            }
+            if (index == nums.lastIndex) {
+                return last + 1
+            }
+        }
+        return 0
+    }
+
+    //35. Search Insert Position (BinarySearchの場合)
+    fun searchInsertBinarySearch(nums: IntArray, target: Int): Int {
+        val result = -nums.binarySearch(target) - 1
+        return if (result < 0) {
+            -result - 1
+        } else {
+            result
+        }
+    }
 }

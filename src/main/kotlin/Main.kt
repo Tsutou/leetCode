@@ -19,7 +19,25 @@ class Solution {
             mergedArray[midIndex].toDouble()
         } else {
             val midIndex = totalSize / 2
-            (mergedArray[midIndex -1] + mergedArray[midIndex]) / 2.toDouble()
+            (mergedArray[midIndex - 1] + mergedArray[midIndex]) / 2.toDouble()
         }
+    }
+
+    // 5. Longest Palindromic Substring
+    fun longestPalindrome(s: String): String {
+        val size = s.length
+        repeat(size) { index ->
+            val window = s.windowedSequence(
+                size - index
+            ).filter {
+                it.first() == it.last()
+            }.firstOrNull {
+                it == it.reversed()
+            } ?: return@repeat
+
+            return window
+        }
+
+        return ""
     }
 }

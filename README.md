@@ -1,2 +1,2 @@
 # leetCode
-leetCodeを頑張る
+leetCode trainning
